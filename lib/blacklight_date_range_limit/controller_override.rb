@@ -1,5 +1,5 @@
 # Meant to be applied on top of a controller that implements
-# Blacklight::SolrHelper. Will inject range limiting behaviors
+# Blacklight::SolrHelper. Will inject date range limiting behaviors
 # to solr parameters creation.
 require 'blacklight_date_range_limit/segment_calculation'
 module BlacklightDateRangeLimit
@@ -12,13 +12,13 @@ module BlacklightDateRangeLimit
     end
 
     # Action method of our own!
-    # Delivers a _partial_ that's a display of a single fields range facets.
-    # Used when we need a second Solr query to get range facets, after the
+    # Delivers a _partial_ that's a display of a single fields date_range facets.
+    # Used when we need a second Solr query to get date_range facets, after the
     # first found min/max from result set.
     def date_range_limit
       # We need to swap out the add_date_range_limit_params search param filter,
       # and instead add in our fetch_specific_date_range_limit filter,
-      # to fetch only the range limit segments for only specific
+      # to fetch only the date_range limit segments for only specific
       # field (with start/end params) mentioned in query params
       # date_range_field, date_range_start, and date_range_end
 

@@ -5,10 +5,10 @@ Gem::Specification.new do |s|
   s.name     = 'blacklight_date_range_limit'
   s.version  = BlacklightDateRangeLimit::VERSION
   s.platform = Gem::Platform::RUBY
-  s.authors  = ['Jonathan Rochkind', 'Chris Beer']
-  s.email    = ['blacklight-development@googlegroups.com']
-  s.homepage = 'https://github.com/projectblacklight/blacklight_date_range_limit'
-  s.summary  = 'Blacklight DateRange Limit plugin'
+  #s.authors  = ['Jonathan Rochkind', 'Chris Beer']
+  #s.email    = ['blacklight-development@googlegroups.com']
+  #s.homepage = 'https://github.com/projectblacklight/blacklight_range_limit'
+  s.summary  = 'Blacklight Date Range Limit plugin'
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")

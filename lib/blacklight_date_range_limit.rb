@@ -10,7 +10,7 @@ module BlacklightDateRangeLimit
 
   autoload :Routes, 'blacklight_date_range_limit/routes'
 
-  # Raised when an invalid range is encountered
+  # Raised when an invalid date range is encountered
   class InvalidDateRange < TypeError; end
 
   mattr_accessor :labels, :classes
@@ -27,19 +27,19 @@ module BlacklightDateRangeLimit
     array << element unless array.include?(element)
   end
 
-  # Convenience method for returning range config hash from
+  # Convenience method for returning date range config hash from
   # blacklight config, for a specific solr field, in a normalized
   # way.
   #
-  # Returns false if range limiting not configured.
+  # Returns false if date range limiting not configured.
   # Returns hash even if configured to 'true'
   # for consistency.
   def self.date_range_config(blacklight_config, solr_field)
     field = blacklight_config.facet_fields[solr_field.to_s]
 
-    return false unless field.range
+    return false unless field.date_range
 
-    config = field.range
+    config = field.date_range
     config = { partial: field.partial } if config === true
 
     config

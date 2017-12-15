@@ -12,8 +12,8 @@
     end
 
     def has_date_range_limit_parameters?(my_params = params)
-      my_params[:range] &&
-        my_params[:range].to_unsafe_h.any? do |key, v|
+      my_params[:date_range] &&
+        my_params[:date_range].to_unsafe_h.any? do |key, v|
           v.present? && v.respond_to?(:'[]') &&
           (v["begin"].present? || v["end"].present? || v["missing"].present?)
         end
@@ -32,11 +32,11 @@
     def facet_field_in_params?(field_name)
       return super || (
         date_range_config(field_name) &&
-        params[:range] &&
-        params[:range][field_name] &&
-          ( params[:range][field_name]["begin"].present? ||
-            params[:range][field_name]["end"].present? ||
-            params[:range][field_name]["missing"].present?
+        params[:date_range] &&
+        params[:date_range][field_name] &&
+          ( params[:date_range][field_name]["begin"].present? ||
+            params[:date_range][field_name]["end"].present? ||
+            params[:date_range][field_name]["missing"].present?
           )
       )
     end
@@ -44,8 +44,8 @@
     def render_constraints_filters(my_params = params)
       content = super(my_params)
       # add a constraint for ranges?
-      unless my_params[:range].blank?
-        my_params[:range].each_pair do |solr_field, hash|
+      unless my_params[:date_range].blank?
+        my_params[:date_range].each_pair do |solr_field, hash|
 
           next unless hash["missing"] || (!hash["begin"].blank?) || (!hash["end"].blank?)
           content << render_constraint_element(
@@ -62,8 +62,8 @@
     def render_search_to_s_filters(my_params)
       content = super(my_params)
       # add a constraint for ranges?
-      unless my_params[:range].blank?
-        my_params[:range].each_pair do |solr_field, hash|
+      unless my_params[:date_range].blank?
+        my_params[:date_range].each_pair do |solr_field, hash|
           next unless hash["missing"] || (!hash["begin"].blank?) || (! hash["end"].blank?)
 
           content << render_search_to_s_element(

@@ -8,11 +8,11 @@
 -%>
 
 <div class="limit_content date_range_limit">  
-  <% if  params["range"] &&
-         params["range"][solr_field] &&
-         ( (! params["range"][solr_field]["begin"].blank?) ||
-           (! params["range"][solr_field]["end"].blank?) ||
-           params["range"][solr_field]["missing"]) %>
+  <% if  params["date_range"] &&
+         params["date_range"][solr_field] &&
+         ( (! params["date_range"][solr_field]["begin"].blank?) ||
+           (! params["date_range"][solr_field]["end"].blank?) ||
+           params["date_range"][solr_field]["missing"]) %>
     <ul class="current list-unstyled facet-values">
       <li class="selected">
         <span class="facet-label">
@@ -28,7 +28,7 @@
          
   <% end %>
 
-  <% unless params["range"] && params["range"][solr_field] && params["range"][solr_field]["missing"] %>  
+  <% unless params["date_range"] && params["date_range"][solr_field] && params["date_range"][solr_field]["missing"] %>  
     <%= form_tag search_action_path, :method => :get, class: [BlacklightDateRangeLimit.classes[:form], "date_range_#{solr_field}"].join(' ') do %>
       <%= render_hash_as_hidden_fields(search_state.params_for_search) %>
       
@@ -36,7 +36,7 @@
            to trick blacklight into displaying actual search results instead
            of home page. Not a great solution, but easiest for now. -->
       <% unless params.has_key?(:search_field) %>
-        <%= hidden_field_tag("search_field", "dummy_range") %>
+        <%= hidden_field_tag("search_field", "dummy_date_range") %>
       <% end %>
       
       <%= render_date_range_input(solr_field, :begin, input_label_date_range_begin, maxlength) %> – <%= render_date_range_input(solr_field, :end, input_label_date_range_end, maxlength) %>
@@ -46,14 +46,14 @@
   <% end %>
     
   <!-- no results profile if missing is selected -->
-  <% unless params["range"] && params["range"][solr_field] && params["range"][solr_field]["missing"] %>
+  <% unless params["date_range"] && params["date_range"][solr_field] && params["date_range"][solr_field]["missing"] %>
     <!-- you can hide this if you want, but it has to be on page if you want
          JS slider and calculated facets to show up, JS sniffs it. -->
     <div class="profile">
     
         <% if (min = date_range_results_endpoint(solr_field, :min)) &&
               (max = date_range_results_endpoint(solr_field, :max)) %>
-          <p class="range subsection <%= "slider_js" unless field_config[:slider_js] == false  %>">
+          <p class="date-range subsection <%= "slider_js" unless field_config[:slider_js] == false  %>">
             Current results range from <span class="min"><%= date_range_results_endpoint(solr_field, :min) %></span> to <span class="max"><%= date_range_results_endpoint(solr_field, :max) %></span>
           </p>
           

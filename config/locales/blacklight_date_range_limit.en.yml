@@ -1,7 +1,7 @@
 en:
   blacklight:
     date_range_limit:
-      date_range_begin: "%{field_label} range begin"
-      date_range_end: "%{field_label} range end"
+      date_range_begin: "%{field_label} begin"
+      date_range_end: "%{field_label} end"
       submit_limit: 'Limit'
       remove_limit: 'remove'
