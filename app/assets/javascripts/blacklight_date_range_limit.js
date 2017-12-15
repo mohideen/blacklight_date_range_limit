@@ -10,4 +10,4 @@
 
 //= require bootstrap/tooltip
 
-//= require_tree './blacklight_range_limit'
+//= require_tree './blacklight_date_range_limit'

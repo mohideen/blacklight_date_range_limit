@@ -1,6 +1,6 @@
-module BlacklightRangeLimit
+module BlacklightDateRangeLimit
   module Routes
-    class RangeSearchable
+    class DateRangeSearchable
       def initialize(defaults = {})
         @defaults = defaults
       end
@@ -8,7 +8,7 @@ module BlacklightRangeLimit
       def call(mapper, options = {})
         options = @defaults.merge(options)
 
-        mapper.get 'range_limit', action: 'range_limit'
+        mapper.get 'date_range_limit', action: 'date_range_limit'
       end
     end
   end

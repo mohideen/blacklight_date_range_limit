@@ -1,9 +1,9 @@
-form.range_limit {
+form.date_range_limit {
   /* leave room for buttons not to collide on line wrap */
   line-height: 3;
 }
 
-.range_limit input.range_begin, .range_limit input.range_end {
+.date_range_limit input.date_range_begin, .date_range_limit input.date_range_end {
   display: inline-block;
   width: 4.5em;
 }

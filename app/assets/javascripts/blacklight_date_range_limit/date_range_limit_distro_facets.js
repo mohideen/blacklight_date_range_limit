@@ -14,13 +14,13 @@ Blacklight.onLoad(function() {
 
 
   // Facets already on the page? Turn em into a chart.
-  $(".range_limit .profile .distribution.chart_js ul").each(function() {
+  $(".date_range_limit .profile .distribution.chart_js ul").each(function() {
       turnIntoPlot($(this).parent());
   });
 
 
   // Add AJAX fetched range facets if needed, and add a chart to em
-  $(".range_limit .profile .distribution a.load_distribution").each(function() {
+  $(".date_range_limit .profile .distribution a.load_distribution").each(function() {
       var container = $(this).parent('div.distribution');
 
       $(container).load($(this).attr('href'), function(response, status) {
@@ -68,8 +68,8 @@ Blacklight.onLoad(function() {
         plot.draw();
         // plus trigger redraw of the selection, which otherwise ain't always right
         // we'll trigger a fake event on one of the boxes
-        var form = $(container).closest(".limit_content").find("form.range_limit");
-        form.find("input.range_begin").trigger("change");
+        var form = $(container).closest(".limit_content").find("form.date_range_limit");
+        form.find("input.date_range_begin").trigger("change");
 
         // send our custom event to trigger redraw of slider
         $(container).trigger(redrawnEvent);
@@ -145,7 +145,7 @@ Blacklight.onLoad(function() {
   }
 
      // Takes a div holding a ul of distribution segments produced by
-    // blacklight_range_limit/_range_facets and makes it into
+    // blacklight_date_range_limit/_date_range_facets and makes it into
     // a flot area chart.
     function areaChart(container) {
       //flot loaded? And canvas element supported.
@@ -155,13 +155,13 @@ Blacklight.onLoad(function() {
         var series_data = new Array();
         var pointer_lookup = new Array();
         var x_ticks = new Array();
-        var min = BlacklightRangeLimit.parseNum($(container).find("ul li:first-child span.from").text());
-        var max = BlacklightRangeLimit.parseNum($(container).find("ul li:last-child span.to").text());
+        var min = BlacklightDateRangeLimit.parseNum($(container).find("ul li:first-child span.from").text());
+        var max = BlacklightDateRangeLimit.parseNum($(container).find("ul li:last-child span.to").text());
 
         $(container).find("ul li").each(function() {
-            var from = BlacklightRangeLimit.parseNum($(this).find("span.from").text());
-            var to = BlacklightRangeLimit.parseNum($(this).find("span.to").text());
-            var count = BlacklightRangeLimit.parseNum($(this).find("span.count").text());
+            var from = BlacklightDateRangeLimit.parseNum($(this).find("span.from").text());
+            var to = BlacklightDateRangeLimit.parseNum($(this).find("span.to").text());
+            var count = BlacklightDateRangeLimit.parseNum($(this).find("span.count").text());
             var avg = (count / (to - from + 1));
 
 
@@ -174,7 +174,7 @@ Blacklight.onLoad(function() {
 
             pointer_lookup.push({'from': from, 'to': to, 'count': count, 'label': $(this).find(".facet_select").text() });
         });
-        var max_plus_one = BlacklightRangeLimit.parseNum($(container).find("ul li:last-child span.to").text())+1;
+        var max_plus_one = BlacklightDateRangeLimit.parseNum($(container).find("ul li:last-child span.to").text())+1;
         x_ticks.push( max_plus_one );
 
 
@@ -205,7 +205,7 @@ Blacklight.onLoad(function() {
           segment = find_segment_for(pos.x);
 
           if(segment != last_segment) {
-            var title = find_segment_for(pos.x).label  + ' (' + BlacklightRangeLimit.parseNum(segment.count) + ')';
+            var title = find_segment_for(pos.x).label  + ' (' + BlacklightDateRangeLimit.parseNum(segment.count) + ')';
             $('.distribution').attr("title", title).tooltip("fixTitle").tooltip("show");
 
             last_segment  = segment;
@@ -227,9 +227,9 @@ Blacklight.onLoad(function() {
               var from = Math.floor(ranges.xaxis.from);
               var to = Math.floor(ranges.xaxis.to);
 
-              var form = $(container).closest(".limit_content").find("form.range_limit");
-              form.find("input.range_begin").val(from);
-              form.find("input.range_end").val(to);
+              var form = $(container).closest(".limit_content").find("form.date_range_limit");
+              form.find("input.date_range_begin").val(from);
+              form.find("input.date_range_end").val(to);
 
               var slider_placeholder = $(container).closest(".limit_content").find("[data-slider-placeholder]");
               if (slider_placeholder) {
@@ -238,14 +238,14 @@ Blacklight.onLoad(function() {
             }
         });
 
-        var form = $(container).closest(".limit_content").find("form.range_limit");
-        form.find("input.range_begin, input.range_end").change(function () {
+        var form = $(container).closest(".limit_content").find("form.date_range_limit");
+        form.find("input.date_range_begin, input.date_range_end").change(function () {
            plot.setSelection( form_selection(form, min, max) , true );
         });
         $(container).closest(".limit_content").find(".profile .range").on("slide", function(event, ui) {
           var values = $(event.target).data("slider").getValue();
-          form.find("input.range_begin").val(values[0]);
-          form.find("input.range_end").val(values[1]);
+          form.find("input.date_range_begin").val(values[0]);
+          form.find("input.date_range_end").val(values[1]);
           plot.setSelection( normalized_selection(values[0], Math.max(values[0], values[1]-1)), true);
         });
 
@@ -266,11 +266,11 @@ Blacklight.onLoad(function() {
     }
 
     function form_selection(form, min, max) {
-      var begin_val = BlacklightRangeLimit.parseNum($(form).find("input.range_begin").val());
+      var begin_val = BlacklightDateRangeLimit.parseNum($(form).find("input.date_range_begin").val());
       if (isNaN(begin_val) || begin_val < min) {
         begin_val = min;
       }
-      var end_val = BlacklightRangeLimit.parseNum($(form).find("input.range_end").val());
+      var end_val = BlacklightDateRangeLimit.parseNum($(form).find("input.date_range_end").val());
       if (isNaN(end_val) || end_val > max) {
         end_val = max;
       }

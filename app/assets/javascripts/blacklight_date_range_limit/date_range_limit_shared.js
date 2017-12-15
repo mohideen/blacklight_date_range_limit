@@ -4,21 +4,21 @@
 !function(global) {
   'use strict';
 
-  var previousBlacklightRangeLimit = global.BlacklightRangeLimit;
+  var previousBlacklightDateRangeLimit = global.BlacklightDateRangeLimit;
 
-  function BlacklightRangeLimit(options) {
+  function BlacklightDateRangeLimit(options) {
     this.options = options || {};
   }
 
-  BlacklightRangeLimit.noConflict = function noConflict() {
-    global.BlacklightRangeLimit = previousBlacklightRangeLimit;
-    return BlacklightRangeLimit;
+  BlacklightDateRangeLimit.noConflict = function noConflict() {
+    global.BlacklightDateRangeLimit = previousBlacklightDateRangeLimit;
+    return BlacklightDateRangeLimit;
   };
 
-  BlacklightRangeLimit.parseNum = function parseNum(str) {
+  BlacklightDateRangeLimit.parseNum = function parseNum(str) {
     str = String(str).replace(/[^0-9]/g, '');
     return parseInt(str, 10);
   };
 
-  global.BlacklightRangeLimit = BlacklightRangeLimit;
+  global.BlacklightDateRangeLimit = BlacklightDateRangeLimit;
 }(this);

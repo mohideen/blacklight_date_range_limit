@@ -1,16 +1,16 @@
 require 'rails/generators'
 
-module BlacklightRangeLimit
+module BlacklightDateRangeLimit
   class InstallGenerator < Rails::Generators::Base
     source_root File.expand_path('../templates', __FILE__)
 
     def copy_public_assets
-      generate 'blacklight_range_limit:assets'
+      generate 'blacklight_date_range_limit:assets'
     end
 
     def install_catalog_controller_mixin
       inject_into_class 'app/controllers/catalog_controller.rb', CatalogController do
-        "\n  include BlacklightRangeLimit::ControllerOverride\n"
+        "\n  include BlacklightDateRangeLimit::ControllerOverride\n"
       end
     end
 
@@ -18,10 +18,10 @@ module BlacklightRangeLimit
       path = 'app/models/search_builder.rb'
       if File.exists? path
         inject_into_file path, after: /include Blacklight::Solr::SearchBuilderBehavior.*$/ do
-          "\n  include BlacklightRangeLimit::RangeLimitBuilder\n"
+          "\n  include BlacklightDateRangeLimit::DateRangeLimitBuilder\n"
         end
       else
-        say_status("error", "Unable to find #{path}. You must manually add the 'include BlacklightRangeLimit::RangeLimitBuilder' to your SearchBuilder", :red)
+        say_status("error", "Unable to find #{path}. You must manually add the 'include BlacklightDateRangeLimit::DateRangeLimitBuilder' to your SearchBuilder", :red)
       end
     end
 
@@ -30,14 +30,14 @@ module BlacklightRangeLimit
     end
 
     def install_routing_concern
-      route('concern :range_searchable, BlacklightRangeLimit::Routes::RangeSearchable.new')
+      route('concern :date_range_searchable, BlacklightDateRangeLimit::Routes::DateRangeSearchable.new')
     end
 
-    def add_range_limit_concern_to_catalog
+    def add_date_range_limit_concern_to_catalog
       sentinel = /concerns :searchable.*$/
 
       inject_into_file 'config/routes.rb', after: sentinel do
-        "\n    concerns :range_searchable\n"
+        "\n    concerns :date_range_searchable\n"
       end
     end
   end

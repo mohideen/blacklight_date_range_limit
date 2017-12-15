@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
-require File.join(File.dirname(__FILE__), 'lib/blacklight_range_limit/version')
+require File.join(File.dirname(__FILE__), 'lib/blacklight_date_range_limit/version')
 
 Gem::Specification.new do |s|
-  s.name     = 'blacklight_range_limit'
-  s.version  = BlacklightRangeLimit::VERSION
+  s.name     = 'blacklight_date_range_limit'
+  s.version  = BlacklightDateRangeLimit::VERSION
   s.platform = Gem::Platform::RUBY
   s.authors  = ['Jonathan Rochkind', 'Chris Beer']
   s.email    = ['blacklight-development@googlegroups.com']
-  s.homepage = 'https://github.com/projectblacklight/blacklight_range_limit'
-  s.summary  = 'Blacklight Range Limit plugin'
+  s.homepage = 'https://github.com/projectblacklight/blacklight_date_range_limit'
+  s.summary  = 'Blacklight DateRange Limit plugin'
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")

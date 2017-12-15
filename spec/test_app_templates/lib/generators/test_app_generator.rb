@@ -14,10 +14,10 @@ class TestAppGenerator < Rails::Generators::Base
     generate 'blacklight:install', '--devise'
   end
 
-  def run_blacklight_range_limit_generator
+  def run_blacklight_date_range_limit_generator
     say_status("warning", "GENERATING BL", :yellow)
 
-    generate 'blacklight_range_limit:install'
+    generate 'blacklight_date_range_limit:install'
   end
 
   def fixtures

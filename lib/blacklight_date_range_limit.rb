@@ -1,24 +1,24 @@
-# BlacklightRangeLimit
+# BlacklightDateRangeLimit
 
-module BlacklightRangeLimit
-  require 'blacklight_range_limit/range_limit_builder'
-  require 'blacklight_range_limit/controller_override'
-  require 'blacklight_range_limit/view_helper_override'
+module BlacklightDateRangeLimit
+  require 'blacklight_date_range_limit/date_range_limit_builder'
+  require 'blacklight_date_range_limit/controller_override'
+  require 'blacklight_date_range_limit/view_helper_override'
 
-  require 'blacklight_range_limit/version'
-  require 'blacklight_range_limit/engine'
+  require 'blacklight_date_range_limit/version'
+  require 'blacklight_date_range_limit/engine'
 
-  autoload :Routes, 'blacklight_range_limit/routes'
+  autoload :Routes, 'blacklight_date_range_limit/routes'
 
   # Raised when an invalid range is encountered
-  class InvalidRange < TypeError; end
+  class InvalidDateRange < TypeError; end
 
   mattr_accessor :labels, :classes
   self.labels = {
     :missing => "Unknown"
   }
   self.classes = {
-    form: 'range_limit subsection form-inline',
+    form: 'date_range_limit subsection form-inline',
     submit: 'submit btn btn-default'
   }
 
@@ -34,7 +34,7 @@ module BlacklightRangeLimit
   # Returns false if range limiting not configured.
   # Returns hash even if configured to 'true'
   # for consistency.
-  def self.range_config(blacklight_config, solr_field)
+  def self.date_range_config(blacklight_config, solr_field)
     field = blacklight_config.facet_fields[solr_field.to_s]
 
     return false unless field.range

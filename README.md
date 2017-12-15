@@ -1,12 +1,12 @@
-BlacklightRangeLimit:  integer range limiting and profiling for Blacklight applications
+BlacklightDateRangeLimit:  integer range limiting and profiling for Blacklight applications
 
-[![Build Status](https://travis-ci.org/projectblacklight/blacklight_range_limit.png?branch=v5.0.0)](https://travis-ci.org/projectblacklight/blacklight_range_limit) [![Gem Version](https://badge.fury.io/rb/blacklight_range_limit.png)](http://badge.fury.io/rb/blacklight_range_limit)
+[![Build Status](https://travis-ci.org/projectblacklight/blacklight_date_range_limit.png?branch=v5.0.0)](https://travis-ci.org/projectblacklight/blacklight_date_range_limit) [![Gem Version](https://badge.fury.io/rb/blacklight_date_range_limit.png)](http://badge.fury.io/rb/blacklight_date_range_limit)
 
 ![Screen shot](doc/example-screenshot.png)
 
 # Description
 
-The BlacklightRangeLimit plugin provides a 'facet' or limit for integer fields, that lets the user enter range limits with a text box or a slider, and also provides area charts giving a sense of the distribution of values (with drill down). 
+The BlacklightDateRangeLimit plugin provides a 'facet' or limit for integer fields, that lets the user enter range limits with a text box or a slider, and also provides area charts giving a sense of the distribution of values (with drill down). 
 
 The primary use case of this plugin is for 'year' data, but it should work for any integer field. It may not work right for negative numbers, however. 
 
@@ -27,17 +27,17 @@ The pre Solr 1.4 now deprecated sint or slong types should work fine too.
 
 # Installation
 
-Current 5.x version of `blacklight_range_limit` work with `blacklight` 5.x -- we now synchronize the _major version number_ between `blacklight` and `blacklight_range_limit`.  `blacklight_range_limit` 2.1 is the last version believed to work with blacklight 4.x or possibly blacklight 3.x.
+Current 5.x version of `blacklight_date_range_limit` work with `blacklight` 5.x -- we now synchronize the _major version number_ between `blacklight` and `blacklight_date_range_limit`.  `blacklight_date_range_limit` 2.1 is the last version believed to work with blacklight 4.x or possibly blacklight 3.x.
 
 Add
 
-    gem "blacklight_range_limit"
+    gem "blacklight_date_range_limit"
 
 to your Gemfile. Run "bundle install". 
 
 Then run 
 
-    rails generate blacklight_range_limit:install
+    rails generate blacklight_date_range_limit:install
 
 This will install some asset references in your application.js and application.css.
 
@@ -49,7 +49,7 @@ You have at least one solr field you want to display as a range limit, that's wh
 config.add_facet_field 'pub_date', label: 'Publication Year', range: true 
 ```
   
-You should now get range limit display. More complicated configuration is available if desired, see Range Facet Configuration below. 
+You should now get range limit display. More complicated configuration is available if desired, see DateRange Facet Configuration below. 
 
 
 You can also configure the look and feel of the Flot chart using the jQuery .data() method. On the `.facet_limit` container you want to configure, add a Flot options associative array (documented at http://people.iola.dk/olau/flot/API.txt) as the `plot-config` key. The `plot-config` key to set the `plot-config` key on the appropriate `.facet_limit` container. In order to customize the plot colors, for example, you could use this code:
@@ -77,7 +77,7 @@ If you'd like to avoid this, you can turn off segment display altogether with th
 Note that a drill-down will never require the second request, because boundaries on a drill-down are always taken from the specified limits.
 
  
-## Range Facet Configuration
+## DateRange Facet Configuration
 
 Instead of simply passing "true", you can pass a hash with additional configuration. Here's an example with all the available keys, you don't need to use them all, just the ones you want to set to non-default values. 
 
@@ -102,15 +102,15 @@ config.add_facet_field 'pub_date', label: 'Publication Year',
    
 ## Javascript dependencies
 
-The selectable histograms/barcharts are done with Javascript, using [Flot](http://code.google.com/p/flot/). Flot requires JQuery, as well as support for the HTML5 canvas element. In IE previous to IE9, canvas element support can be added with [excanvas](http://excanvas.sourceforge.net/). For the slider, [bootstrap-slider](http://www.eyecon.ro/bootstrap-slider/) is used (bootstrap-slider is actually third party, not officially bootstrap). Flot and bootstrap-slider are both directly included in blacklight_range_limit in vendor. 
+The selectable histograms/barcharts are done with Javascript, using [Flot](http://code.google.com/p/flot/). Flot requires JQuery, as well as support for the HTML5 canvas element. In IE previous to IE9, canvas element support can be added with [excanvas](http://excanvas.sourceforge.net/). For the slider, [bootstrap-slider](http://www.eyecon.ro/bootstrap-slider/) is used (bootstrap-slider is actually third party, not officially bootstrap). Flot and bootstrap-slider are both directly included in blacklight_date_range_limit in vendor. 
 
-A `require 'blacklight_range_limit'` in a Rails asset pipeline manifest file will automatically include all of these things. The blacklight_range_limit adds just this line to your `app/assets/application.js`. 
+A `require 'blacklight_date_range_limit'` in a Rails asset pipeline manifest file will automatically include all of these things. The blacklight_date_range_limit adds just this line to your `app/assets/application.js`. 
 
 There is a copy of flot vendored in this gem for this purpose. jquery is obtained from the jquery-rails gem, which this gem depends on. 
 
-Note this means a copy of jquery, from the jquery-rails gem, will be included in your assets by blacklight_range_limit even if you didn't include it yourself explicitly in application.js. Flot will also be included.
+Note this means a copy of jquery, from the jquery-rails gem, will be included in your assets by blacklight_date_range_limit even if you didn't include it yourself explicitly in application.js. Flot will also be included.
 
-If you don't want any of this gem's JS, you can simply remove the `require 'blacklight_range_limit'` line from your application.js, and hack something else together yourself. 
+If you don't want any of this gem's JS, you can simply remove the `require 'blacklight_date_range_limit'` line from your application.js, and hack something else together yourself. 
 
 ## IE8, excanvas
 
@@ -118,7 +118,7 @@ IE8 and below do not support the 'canvas' element, needed for flot to render the
 Without canvas, view will cleanly degrade to an ordinary textual listing of range segments
 as facets. 
 
-Or, you can use excanvas.js to add canvas support to IE.  `blacklight_range_limit` includes
+Or, you can use excanvas.js to add canvas support to IE.  `blacklight_date_range_limit` includes
 the `excanvas.js` file, but you'll have to manually add a reference to it to your Rails layout
 template -- if you were previously using the stock Blacklight layout, you'll have to add a
 local custom layout instead. Then add this to the html `<head>` section:
@@ -152,7 +152,7 @@ bundle exec rake test:server
 
 Now from another shell run your individual test as needed:
 ```bash
-bundle exec rspec spec/features/blacklight_range_limit_spec.rb
+bundle exec rspec spec/features/blacklight_date_range_limit_spec.rb
 ```
 
 Once you are done iterating on your test you will need to stop the application server with `Ctrl-C`.

@@ -1,6 +1,6 @@
 require 'rails/generators'
 
-namespace :blacklight_range_limit do
+namespace :blacklight_date_range_limit do
   desc 'Add in additional Solr docs'
   task seed: :environment do
     solr = CatalogController.new.repository.connection
