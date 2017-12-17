@@ -2,7 +2,7 @@
 module DateRangeLimitHelper
 
   # type is 'begin' or 'end'
-  def render_date_range_input(solr_field, type, input_label = nil, maxlength=4)
+  def render_date_range_input(solr_field, type, input_label = nil, maxlength=10)
     type = type.to_s
 
     default = params["date_range"][solr_field][type] if params["date_range"] && params["date_range"][solr_field] && params["date_range"][solr_field][type]
