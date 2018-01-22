@@ -1,7 +1,7 @@
-  # Meant to be applied on top of Blacklight helpers, to over-ride
-  # Will add rendering of limit itself in sidebar, and of constraings
-  # display.
-  module BlacklightDateRangeLimit::ViewHelperOverride
+# Meant to be applied on top of Blacklight helpers, to over-ride
+# Will add rendering of limit itself in sidebar, and of constraings
+# display.
+module BlacklightDateRangeLimit::ViewHelperOverride
 
 
 
@@ -79,10 +79,10 @@
 
     def remove_date_range_param(solr_field, my_params = params)
       my_params = Blacklight::SearchState.new(my_params, blacklight_config).to_h
-      if ( my_params["range"] )
+      if ( my_params["date_range"] )
         my_params = my_params.dup
-        my_params["range"] = my_params["range"].dup
-        my_params["range"].delete(solr_field)
+        my_params["date_range"] = my_params["date_range"].dup
+        my_params["date_range"].delete(solr_field)
       end
       return my_params
     end
@@ -110,4 +110,4 @@
       BlacklightDateRangeLimit.date_range_config(blacklight_config, solr_field)
     end
 
-  end
+end
