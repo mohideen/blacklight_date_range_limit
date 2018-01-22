@@ -3,9 +3,6 @@
 // require does not need to change if we change file list.
 
 //= require 'jquery'
-
 //= require 'bootstrap-datepicker'
-
 //= require bootstrap/tooltip
-
-//= require_tree './blacklight_date_range_limit'
+//= require datepicker
