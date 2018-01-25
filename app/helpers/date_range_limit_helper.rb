@@ -12,20 +12,6 @@ module DateRangeLimitHelper
     html += text_field_tag("date_range[#{solr_field}][#{type}]", default, :maxlength=>maxlength, :class => "form-control date_range_#{type}")
   end
 
-  # type is 'min' or 'max'
-  # Returns smallest and largest value in current result set, if available
-  # from stats component response. 
-  def date_range_results_endpoint(solr_field, type)
-    stats = stats_for_field(solr_field)
-        
-    return nil unless stats
-    # StatsComponent returns weird min/max when there are in
-    # fact no values
-    return nil if @response.total == stats["missing"]
-
-    return stats[type].to_s.gsub(/\.0+/, '')
-  end
-
   def date_range_display(solr_field, my_params = params)
     return "" unless my_params[:date_range] && my_params[:date_range][solr_field]
 
@@ -44,18 +30,10 @@ module DateRangeLimitHelper
     return ""
   end
 
-  # Show the limit area if:
-  # 1) we have a limit already set
-  # OR
-  # 2) stats show max > min, OR
-  # 3) count > 0 if no stats available. 
+  # Show the limit areaif:
+  #  count > 0 
   def should_show_limit(solr_field)
-    stats = stats_for_field(solr_field)
-    
-    (params["date_range"] && params["date_range"][solr_field]) ||
-    (  stats &&
-      stats["max"] > stats["min"]) ||
-    ( !stats  && @response.total > 0 )
+    @response.total > 0 
   end
 
   def stats_for_field(solr_field)

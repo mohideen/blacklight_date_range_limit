@@ -8,8 +8,6 @@ module BlacklightDateRangeLimit
   require 'blacklight_date_range_limit/version'
   require 'blacklight_date_range_limit/engine'
 
-  autoload :Routes, 'blacklight_date_range_limit/routes'
-
   # Raised when an invalid date range is encountered
   class InvalidDateRange < TypeError; end
 
